@@ -25,21 +25,23 @@ guid = "a5b60d24-9c73-4ca9-beb7-6c1a3eea7c33"
 
 # Logger
 logger = logging.getLogger(__name__)
-logger.addHandler(AzureLogHandler(
-    connection_string=f'InstrumentationKey={guid}')
+logger.addHandler(
+    AzureLogHandler(connection_string=f'InstrumentationKey={guid}')
 )
 logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.INFO)
 
 # Metrics
 exporter = metrics_exporter.new_metrics_exporter(
-  enable_standard_metrics=True,
-  connection_string=f'InstrumentationKey={guid}')
+    enable_standard_metrics=True,
+    connection_string=f'InstrumentationKey={guid}'
+)
 
 # Tracing
 tracer = Tracer(
     exporter=AzureExporter(
-        connection_string=f'InstrumentationKey={guid}'),
+        connection_string=f'InstrumentationKey={guid}'
+    ),
     sampler=ProbabilitySampler(1.0),
 )
 app = Flask(__name__)
